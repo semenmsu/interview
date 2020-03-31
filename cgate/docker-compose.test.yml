@@ -1,0 +1,102 @@
+version: "3"
+
+services:
+  common-server:
+    image: "cgate-tools-yard:2.0"
+    build:
+      context: .
+      dockerfile: Dockerfile
+    network_mode: "host"
+    cmd: "common"
+
+
+#xyz:
+#    image: myimage
+#    command: xyz
+#
+#    ports:
+#    - "5000:5000"
+#    volumes:
+##    - .:/code
+#   - logvolume01:/var/log
+
+'''
+
+version: "3"
+
+#volumes:
+
+networks:
+    trade-network:
+        driver: bridge
+        ipam:
+            driver: default
+            config:
+                - subnet: 172.26.0.0/16
+                #gateway: 172.20.0.1
+
+services:
+    mongo-rs0-1:
+        image: "mongo-start"
+        build:
+            context: ./db0
+            dockerfile: Dockerfile
+        networks:
+            trade-network:
+                ipv4_address: 172.26.1.2
+        ports:
+            - "27017:27017"
+        volumes:
+            - ./db0/data:/data/db
+        depends_on:
+            - "mongo-rs0-2"
+            - "mongo-rs0-arb"
+
+    mongo-rs0-2:
+        image: "mongo-rs"
+        build:
+            context: ./db1
+            dockerfile: Dockerfile
+        networks:
+            trade-network:
+                ipv4_address: 172.26.1.3
+        ports:
+            - "27018:27018"
+        volumes:
+            - ./db1/data:/data/db
+
+    mongo-rs0-arb:
+        image: "mongo-rs-arb"
+        build:
+            context: ./arb
+            dockerfile: Dockerfile
+        networks:
+            trade-network:
+                ipv4_address: 172.26.1.4
+        ports:
+            - "27019:27019"
+
+    setup-rs:
+        image: "setup-rs"
+        build: ./setup
+        networks:
+            trade-network:
+                ipv4_address: 172.26.1.5
+        depends_on:
+            - "mongo-rs0-1"
+            - "mongo-rs0-2"
+            - "mongo-rs0-arb"
+
+    adminmongo:
+        image: "mrvautin/adminmongo"
+        environment:
+            - HOST=0.0.0.0
+            - PORT=1234
+        ports:
+            - "1234:1234"
+        networks:
+            trade-network:
+                ipv4_address: 172.26.1.6
+        depends_on:
+            - "setup-rs"
+''''

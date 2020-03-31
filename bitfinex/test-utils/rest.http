@@ -1,0 +1,57 @@
+#https://api-pub.bitfinex.com/v2/<endpoint>/?parameter=value...
+
+GET https://api-pub.bitfinex.com/v2/platform/status
+
+###
+
+GET https://api-pub.bitfinex.com/v2/tickers?symbols=tBTCUSD,tLTCUSD,fUSD
+
+###
+
+GET https://api-pub.bitfinex.com/v2/tickers?symbols=ALL
+
+###
+
+#one ticker
+GET https://api-pub.bitfinex.com/v2/ticker/tBTCUSD
+
+###
+
+GET https://api-pub.bitfinex.com/v2/trades/tBTCUSD/hist
+
+###
+
+GET https://api-pub.bitfinex.com/v2/stats1/pos.size:1m:tBTCUSD:long/last
+
+###
+
+#condig url:Action:Object:Detail
+#map -list, info, list, fees
+#Object: currency, pair, none
+#Detail: for map:currency (sym, label, unit, undl, pool, explorer), list: pari (exchange, margin)
+
+https://api-pub.bitfinex.com/v2/conf/pub:list:pair:exchange
+###
+
+https://api-pub.bitfinex.com/v2/conf/pub:list:pair:margin
+###
+
+https://api-pub.bitfinex.com/v2/conf/pub:list:currency
+
+###
+
+https://api-pub.bitfinex.com/v2/conf/pub:map:currency:explorer
+
+###
+#!!!!
+https://api-pub.bitfinex.com/v2/conf/pub:info:pair
+
+
+### Symbols
+
+https://api.bitfinex.com/v1/symbols
+
+
+### Symbols Details
+
+https://api.bitfinex.com/v1/symbols_details

@@ -1,0 +1,47 @@
+version: "3"
+
+services:
+    router:
+        image: "cgate-router-yard:2.0"
+        build:
+            context: ./router
+            dockerfile: Dockerfile
+        network_mode: "host"
+        volumes:
+            - ./router/cgate/ini:/cgate/ini
+            - ./router/cgate/log:/cgate/log
+    common-server:
+        image: "cgate-tools-yard:2.0"
+        build:
+            context: .
+            dockerfile: Dockerfile
+        network_mode: "host"
+        command: "common"
+        volumes:
+            - ./log:/gateways/log
+        depends_on:
+            - router
+    order-router:
+        image: "cgate-tools-yard:2.0"
+        network_mode: "host"
+        command: "order-router"
+        volumes:
+            - ./log:/gateways/log
+        depends_on:
+            - router
+    part-pos:
+        image: "cgate-tools-yard:2.0"
+        network_mode: "host"
+        command: "part-pos"
+        volumes:
+            - ./log:/gateways/log
+        depends_on:
+            - router
+    trades:
+        image: "cgate-tools-yard:2.0"
+        network_mode: "host"
+        command: "trades"
+        volumes:
+            - ./log:/gateways/log
+        depends_on:
+            - router

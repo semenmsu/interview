@@ -1,0 +1,21 @@
+{
+  "name": "bitfinex",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "banyan": "0.0.1",
+    "bunyan": "^1.8.12",
+    "crypto": "^1.0.1",
+    "dotenv": "^8.1.0",
+    "mongodb": "^3.3.0",
+    "request": "^2.88.0",
+    "ws": "^7.1.2",
+    "zeromq": "^5.1.0"
+  }
+}

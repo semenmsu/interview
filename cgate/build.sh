@@ -1,0 +1,1 @@
+docker build -t cgate-tools-yard:2.0 -f Dockerfile .
